@@ -2,7 +2,7 @@
 
 # Ferias API
 
-Projeto criado para servir de referência ao curso *API RESTfull com Spring Boot utilizando TDD, CI e CD* que está divulgado na plataforma Udemy, a principal funcionalidade dessa API é permitir o cadastro de usuários para manipular de maneira individual uma carteira, inserindo, alterando, removendo ou adicionado itens.
+Projeto criado para servir de referência *API RESTfull com Spring Boot utilizando TDD, CI e CD*, a principal funcionalidade dessa API é permitir o cadastro funcionários e ferias e indicar os que precisam tirar ferias.
 
 ## Detalhes do projeto
 *Esse projeto possui as seguintes características:*
