@@ -9,11 +9,14 @@ import com.hyagohenrique.ferias.exception.NotFoundException;
 import com.hyagohenrique.ferias.irepository.IFuncionarioRepository;
 import com.hyagohenrique.ferias.iservice.IFuncionarioService;
 import com.hyagohenrique.ferias.model.Funcionario;
+import com.hyagohenrique.ferias.model.UploadFileModel;
+import com.hyagohenrique.ferias.service.s3.S3Service;
 import com.hyagohenrique.ferias.utils.DateUtils;
 
 import org.flywaydb.core.internal.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.apachecommons.CommonsLog;
 
@@ -26,6 +29,19 @@ public class FuncionarioService implements IFuncionarioService {
 
     @Autowired
     private IFuncionarioRepository funcionarioRepository;
+
+    @Autowired
+    private S3Service s3Service;
+
+    @Override
+    public Funcionario salvar(Funcionario funcionario, MultipartFile file) {
+        if (file != null) {
+            UploadFileModel upload = this.s3Service.upload(file);
+            funcionario.setAvatar(upload.getName());
+            funcionario.setPathAvatar(upload.getLocation());
+        }
+        return this.salvar(funcionario);
+    }
 
     @Override
     public Funcionario salvar(Funcionario funcionario) {

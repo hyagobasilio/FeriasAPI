@@ -49,6 +49,8 @@ public class Funcionario implements Serializable {
     private Date dataContratacao;
     @Column
     private String avatar;
+    @Column(name = "path_avatar")
+    private String pathAvatar;
     
     
     @JoinColumn(name = "equipe_id", referencedColumnName = "id")
@@ -64,6 +66,8 @@ public class Funcionario implements Serializable {
         dto.setNome(nome);
         dto.setDataNascimento(dataNascimento);
         dto.setDataContratacao(dataContratacao);
+        dto.setAvatar(avatar);
+        dto.setAvatarLocation(pathAvatar);
         if(equipe != null) {
             dto.setEquipeId(equipe.getId());
         }

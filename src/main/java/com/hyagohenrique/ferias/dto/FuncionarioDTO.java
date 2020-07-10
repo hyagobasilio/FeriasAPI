@@ -1,6 +1,6 @@
 package com.hyagohenrique.ferias.dto;
 
-import java.io.Serializable;
+
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
@@ -9,30 +9,39 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hyagohenrique.ferias.model.Endereco;
 import com.hyagohenrique.ferias.model.Equipe;
 import com.hyagohenrique.ferias.model.Funcionario;
+import com.hyagohenrique.ferias.utils.QRCodeUtils;
 
-import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
-@Data
-public class FuncionarioDTO  implements Serializable{
+import lombok.Getter;
+import lombok.Setter;
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+@Getter
+@Setter
+public class FuncionarioDTO  {
+    private MultipartFile arquivo;
     
     private Long id;
     @NotNull(message = "Informe o nome do funcionário")
     private String nome;
     private String matricula;
     @NotNull(message = "Informe uma data de nascimento")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", locale = "pt-BR", timezone = "Brazil/East")
     private Date dataNascimento;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @NotNull(message = "Informe uma data de contratação")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", locale = "pt-BR", timezone = "Brazil/East")
     private Date dataContratacao;
 
+    private String avatar;
+    private String avatarLocation;
+
     @NotNull(message = "Informe a equipe deste funcionário")
     private Long equipeId;
+
+    private String qrcodeBase64;
 
     // Dados do endereço
     @NotNull(message = "Informe o nome da rua")
@@ -42,18 +51,23 @@ public class FuncionarioDTO  implements Serializable{
     private String bairro;
     private String cidade;
     private String estado;
+    
+
+    public void gerarQrCodeBase64() {
+        this.qrcodeBase64 = QRCodeUtils.gerarQRCodeAPartirDeFuncionarioDTO(this, 300, 250);
+    }
 
 
     public Funcionario convertParaEntidade() {
-        Funcionario f = new Funcionario();
+        final Funcionario f = new Funcionario();
         f.setNome(nome);
         f.setDataNascimento(dataNascimento);
         f.setDataContratacao(dataContratacao);
         f.setId(id);
-        Equipe eq = new Equipe();
+        final Equipe eq = new Equipe();
         eq.setId(equipeId);
         f.setEquipe(eq);
-        Endereco endereco = new Endereco();
+        final Endereco endereco = new Endereco();
         endereco.setRua(rua);
         endereco.setNumero(numero);
         endereco.setBairro(bairro);
