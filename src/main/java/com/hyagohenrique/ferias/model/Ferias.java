@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.hyagohenrique.ferias.dto.FeriasDTO;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,4 +43,14 @@ public class Ferias implements Serializable {
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fim;
+
+
+    public FeriasDTO converteParaDTO() {
+        FeriasDTO dto = new FeriasDTO();
+        dto.setId(id);
+        dto.setInicio(inicio);
+        dto.setFim(fim);
+        dto.setFuncionario(funcionario.getId());
+        return dto;
+    }
 }

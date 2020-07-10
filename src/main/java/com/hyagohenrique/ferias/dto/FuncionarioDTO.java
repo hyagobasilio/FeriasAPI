@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hyagohenrique.ferias.model.Endereco;
+import com.hyagohenrique.ferias.model.Equipe;
 import com.hyagohenrique.ferias.model.Funcionario;
 
 import lombok.Data;
@@ -22,6 +23,7 @@ public class FuncionarioDTO  implements Serializable{
     private Long id;
     @NotNull(message = "Informe o nome do funcionário")
     private String nome;
+    private String matricula;
     @NotNull(message = "Informe uma data de nascimento")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", locale = "pt-BR", timezone = "Brazil/East")
     private Date dataNascimento;
@@ -48,6 +50,9 @@ public class FuncionarioDTO  implements Serializable{
         f.setDataNascimento(dataNascimento);
         f.setDataContratacao(dataContratacao);
         f.setId(id);
+        Equipe eq = new Equipe();
+        eq.setId(equipeId);
+        f.setEquipe(eq);
         Endereco endereco = new Endereco();
         endereco.setRua(rua);
         endereco.setNumero(numero);

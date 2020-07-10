@@ -59,10 +59,14 @@ public class Funcionario implements Serializable {
 
     public FuncionarioDTO converteParaDTO() {
         FuncionarioDTO dto = new FuncionarioDTO();
+        dto.setId(id);
+        dto.setMatricula(matricula);
         dto.setNome(nome);
         dto.setDataNascimento(dataNascimento);
         dto.setDataContratacao(dataContratacao);
-        dto.setEquipeId(equipe.getId());
+        if(equipe != null) {
+            dto.setEquipeId(equipe.getId());
+        }
         
         if (endereco != null) {
             dto.setRua(endereco.getRua());

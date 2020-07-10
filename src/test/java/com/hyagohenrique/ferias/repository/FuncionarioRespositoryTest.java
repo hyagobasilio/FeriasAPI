@@ -49,10 +49,47 @@ public class FuncionarioRespositoryTest {
 
     @After
     public void afterEach() {
+        feriasRepository.deleteAll();
         funcionarioRepository.deleteAll();
         equipeRepository.deleteAll();
-        feriasRepository.deleteAll();
 
+    }
+
+    @Test
+    public void testFuncionarioComFeriasNaMesmaEquipeENoMesmoPeriodo() throws ParseException {
+
+        Funcionario funcionario= getFuncionario();
+        this.funcionarioRepository.save(funcionario);
+
+        LocalDate inicio = LocalDate.now().minusMonths(2);
+        LocalDate fim  = LocalDate.now().minusMonths(1);
+        
+        Date inicioDate = DateUtils.convertLocalDateToDate(inicio);
+        Date fimDate = DateUtils.convertLocalDateToDate(fim);
+
+        Ferias ferias = new Ferias();
+        ferias.setFuncionario(funcionario);
+        ferias.setInicio(inicioDate);
+        ferias.setFim(fimDate);
+        this.feriasRepository.save(ferias);
+
+        List<Funcionario> lista = this.funcionarioRepository.funcionarioQueEstaoDeFeriasNoMesmoTempoDesejado(funcionario.getEquipe().getId(), inicioDate);
+
+        assertFalse(lista.isEmpty());
+        assertEquals(1, lista.size());
+        
+    }
+
+
+    @Test
+    public void testQuantidadeDeFuncionariosPorEquipe() throws ParseException {
+        Funcionario funcionario = getFuncionario();
+        this.funcionarioRepository.save(funcionario);
+
+        long quantidadePorEquipe = this.funcionarioRepository.countByEquipeId(funcionario.getEquipe().getId());
+        long esperado = Long.parseLong("1");
+
+        assertTrue(esperado == quantidadePorEquipe);
     }
     
     /**

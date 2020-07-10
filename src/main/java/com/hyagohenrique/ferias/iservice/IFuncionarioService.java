@@ -1,7 +1,7 @@
 package com.hyagohenrique.ferias.iservice;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import com.hyagohenrique.ferias.model.Funcionario;
 
@@ -11,5 +11,11 @@ public interface IFuncionarioService {
 
     List<Funcionario> listarFuncionarios();
 
-    Optional<Funcionario> buscarPorId(Long id);
+    Funcionario buscarPorId(Long id);
+
+	List<Funcionario> listarFuncionarioQueDevemTirarFerias(int quantidadeDeMeses);
+
+    void validaSeFuncionarioTemUmAnoDeEmpresa(Funcionario funcionario);
+    
+    void validaSeFuncionarioEstaImpedidoDeTirarFeriasPorContaDeOutraPessoaDaMesmaEquipe(Long idEquipe, Date inicio);
 }

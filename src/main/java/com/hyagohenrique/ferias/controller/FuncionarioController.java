@@ -1,12 +1,13 @@
 package com.hyagohenrique.ferias.controller;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.hyagohenrique.ferias.dto.FeriasDTO;
 import com.hyagohenrique.ferias.dto.FuncionarioDTO;
-import com.hyagohenrique.ferias.irepository.IFuncionarioRepository;
+import com.hyagohenrique.ferias.iservice.IFeriasService;
 import com.hyagohenrique.ferias.iservice.IFuncionarioService;
 import com.hyagohenrique.ferias.model.Funcionario;
 import com.hyagohenrique.ferias.response.Response;
@@ -28,25 +29,32 @@ public class FuncionarioController {
 
     @Autowired
     private IFuncionarioService funcionarioService;
+    @Autowired
+    private IFeriasService feriasService;
     
     @GetMapping
-    public ResponseEntity<Response<List<Funcionario>>> index() {
-        Response<List<Funcionario>> resposta = new Response<>();
-        resposta.setData(funcionarioService.listarFuncionarios());
+    public ResponseEntity<Response<List<FuncionarioDTO>>> index() {
+        Response<List<FuncionarioDTO>> resposta = new Response<>();
+        List<FuncionarioDTO> itens = funcionarioService.listarFuncionarios().stream().map(i -> i.converteParaDTO()).collect(Collectors.toList());
+        resposta.setData(itens);
+        return ResponseEntity.ok(resposta);
+    }
+
+
+    @GetMapping("/ferias-vencer/{meses}")
+    public ResponseEntity<Response<List<FuncionarioDTO>>> funcionriosQueDevemTirarFerias(@PathVariable("meses") int meses) {
+        Response<List<FuncionarioDTO>> resposta = new Response<>();
+        List<FuncionarioDTO> itens = funcionarioService.listarFuncionarioQueDevemTirarFerias(meses).stream().map(i -> i.converteParaDTO()).collect(Collectors.toList());
+        resposta.setData(itens);
         return ResponseEntity.ok(resposta);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Response<FuncionarioDTO> > show(@PathVariable Long id) {
         Response<FuncionarioDTO> resposta = new Response<>();
-        Optional<Funcionario> funcionario = funcionarioService.buscarPorId(id);
+        resposta.setData(funcionarioService.buscarPorId(id).converteParaDTO());
 
-        if(funcionario.isPresent()) {
-            resposta.setData(funcionario.get().converteParaDTO());
-            return ResponseEntity.ok(resposta);
-        }
-        resposta.getErrors().add("Funcionário não encontrado");
-        return ResponseEntity.badRequest().body(resposta);
+        return ResponseEntity.ok(resposta);
     }
 
     @PostMapping
@@ -58,6 +66,7 @@ public class FuncionarioController {
 		}
         Funcionario funcionario = this.funcionarioService.salvar(dto.convertParaEntidade());
         response.setData(funcionario.converteParaDTO());
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     

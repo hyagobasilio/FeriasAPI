@@ -14,4 +14,9 @@ public interface IFuncionarioRepository extends JpaRepository<Funcionario, Long>
         + " WHERE (f.dataContratacao BETWEEN :inicio AND :fim AND NOT EXISTS (SELECT fe FROM Ferias fe WHERE fe.funcionario = f )) "
         + " OR ( EXISTS (SELECT fe FROM Ferias fe WHERE fe.fim BETWEEN :inicio AND :fim AND fe.funcionario = f ) ) ")
     List<Funcionario> consultarFuncionariosQueIraoCompletar2AnosSemSolicitarFeriasEmNoMaximoXMeses(@Param("inicio") Date inicio, @Param("fim")  Date fim);
+
+    @Query("SELECT f FROM Funcionario f WHERE f.equipe.id = :idEquipe AND EXISTS (SELECT fe FROM Ferias fe WHERE fe.funcionario = f and fe.fim >= :dataInicio)")
+    List<Funcionario> funcionarioQueEstaoDeFeriasNoMesmoTempoDesejado(@Param("idEquipe") Long idEquipe, @Param("dataInicio") Date dataInicio);
+
+    long countByEquipeId(Long idEquipe);
 }

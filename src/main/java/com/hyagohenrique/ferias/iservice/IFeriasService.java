@@ -12,4 +12,9 @@ public interface IFeriasService {
     boolean removerFerias(Ferias ferias);
 
     List<Ferias> buscarFeriasPorMatriculaDoFuncionario(String matricula);
+    
+    List<Ferias> listar();
+
+    boolean deletar(Long id);
+
 }

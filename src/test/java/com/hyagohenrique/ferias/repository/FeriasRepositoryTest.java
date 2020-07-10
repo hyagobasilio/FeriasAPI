@@ -2,11 +2,9 @@ package com.hyagohenrique.ferias.repository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +15,6 @@ import com.hyagohenrique.ferias.model.Endereco;
 import com.hyagohenrique.ferias.model.Equipe;
 import com.hyagohenrique.ferias.model.Ferias;
 import com.hyagohenrique.ferias.model.Funcionario;
-import com.hyagohenrique.ferias.utils.DateUtils;
 
 import org.junit.After;
 import org.junit.Test;
