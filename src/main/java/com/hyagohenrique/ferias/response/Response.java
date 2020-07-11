@@ -1,5 +1,6 @@
 package com.hyagohenrique.ferias.response;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Response<T> {
-
+	private LocalDateTime date = LocalDateTime.now();
 	private T data;
 	private List<String> errors;
 	

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -30,10 +31,19 @@ public class ResourceExceptionHandler {
     }
 
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
-    public ResponseEntity<Response> handleError1(MultipartException e, RedirectAttributes redirectAttributes) {
+    public ResponseEntity<Response> handleHttpMediaTypeNotSupportedException(MultipartException e, RedirectAttributes redirectAttributes) {
 
         Response response = new Response<>();
         response.getErrors().add("Formato de arquivo não suportado!");
+        return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body(response);
+
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<Response> handleMaxUploadSizeExceededException(MultipartException e, RedirectAttributes redirectAttributes) {
+
+        Response response = new Response<>();
+        response.getErrors().add("O tamanho máximo de upload de arquivo é de 2MB!");
         return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body(response);
 
     }

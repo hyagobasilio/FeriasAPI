@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hyagohenrique.ferias.model.Endereco;
 import com.hyagohenrique.ferias.model.Equipe;
 import com.hyagohenrique.ferias.model.Funcionario;
@@ -19,6 +20,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FuncionarioDTO  {
     private MultipartFile arquivo;
     
