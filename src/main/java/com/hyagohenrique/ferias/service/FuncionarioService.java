@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-import javax.mail.internet.MimeMessage;
-
 import com.hyagohenrique.ferias.exception.FeriasNaoDisponivelException;
 import com.hyagohenrique.ferias.exception.NotFoundException;
 import com.hyagohenrique.ferias.irepository.IFuncionarioRepository;
@@ -14,12 +12,9 @@ import com.hyagohenrique.ferias.model.Funcionario;
 import com.hyagohenrique.ferias.model.UploadFileModel;
 import com.hyagohenrique.ferias.service.s3.S3Service;
 import com.hyagohenrique.ferias.utils.DateUtils;
-import com.hyagohenrique.ferias.utils.QRCodeUtils;
 
 import org.flywaydb.core.internal.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
