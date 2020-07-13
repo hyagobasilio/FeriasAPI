@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS usuarios (
-    id BIGINT UNSIGNED AUTO_INCREMENT,
+    id BIGINT AUTO_INCREMENT,
     nome VARCHAR(200) NOT NULL,
     email VARCHAR(150) NOT NULL UNIQUE,
     role VARCHAR(20) NOT NULL,
@@ -9,13 +9,13 @@ CREATE TABLE IF NOT EXISTS usuarios (
 
 
 CREATE TABLE IF NOT EXISTS equipes (
-    id BIGINT UNSIGNED AUTO_INCREMENT,
+    id BIGINT AUTO_INCREMENT,
     nome VARCHAR(200) NOT NULL,
     PRIMARY KEY(id)
 );
 
 CREATE TABLE IF NOT EXISTS enderecos (
-    id BIGINT UNSIGNED AUTO_INCREMENT,
+    id BIGINT AUTO_INCREMENT,
     rua VARCHAR(200) NOT NULL,
     numero VARCHAR(5),
     complemento VARCHAR(200),
@@ -26,13 +26,13 @@ CREATE TABLE IF NOT EXISTS enderecos (
 );
 
 CREATE TABLE IF NOT EXISTS funcionarios (
-    id BIGINT UNSIGNED AUTO_INCREMENT,
+    id BIGINT AUTO_INCREMENT,
     nome VARCHAR(200) NOT NULL,
     data_nascimento DATE,
-    endereco_id BIGINT  UNSIGNED,
+    endereco_id BIGINT ,
     data_contratacao DATE,
     avatar VARCHAR(255),
-    equipe_id BIGINT UNSIGNED,
+    equipe_id BIGINT,
     matricula VARCHAR(100),
     PRIMARY KEY(id)
 );
@@ -46,8 +46,8 @@ ADD CONSTRAINT fk_funcionarios_endereco_id
 FOREIGN KEY (endereco_id) REFERENCES enderecos(id);
 
 CREATE TABLE IF NOT EXISTS ferias (
-    id BIGINT UNSIGNED AUTO_INCREMENT,
-    funcionario_id BIGINT UNSIGNED NOT NULL,
+    id BIGINT AUTO_INCREMENT,
+    funcionario_id BIGINT NOT NULL,
     inicio DATE NOT NULL,
     fim DATE NOT NULL,
     PRIMARY KEY(id)
