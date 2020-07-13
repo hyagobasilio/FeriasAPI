@@ -61,7 +61,7 @@ public class FuncionarioService implements IFuncionarioService {
     }
     
     private void enviarEmailComQrCode(Funcionario funcionario) {
-
+        log.info("enviando email");
         /* String qrCodeBase64 = QRCodeUtils.gerarQRCodeAPartirDeFuncionarioDTO(funcionario.converteParaDTO(), 300, 150);
         try {
             MimeMessage mail = mailSender.createMimeMessage();
