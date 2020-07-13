@@ -25,6 +25,7 @@ import com.hyagohenrique.ferias.response.Response;
 import com.hyagohenrique.ferias.utils.QRCodeUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin
 @RestController
 @RequestMapping("funcionario")
 public class FuncionarioController {
@@ -73,6 +75,7 @@ public class FuncionarioController {
         return ResponseEntity.ok(resposta);
     }
 
+    
     @PostMapping
     public ResponseEntity<Response<FuncionarioDTO>> salvar(@Valid @ModelAttribute FuncionarioDTO dto,
             BindingResult result) {
@@ -89,6 +92,7 @@ public class FuncionarioController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+    
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping(value = "/code/{id}", produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] getImageWithMediaType(@PathVariable("id") Long id) throws WriterException, IOException {

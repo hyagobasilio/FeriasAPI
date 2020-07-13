@@ -11,7 +11,6 @@ Projeto criado para servir de referência *API RESTfull com Spring Boot utilizan
 * Banco de dados Postgres com JPA e Spring Data JPA
 * Versionamento de banco de dados com Flyway
 * Testes com JUnit e Mockito com banco H2 em memória
-* Caching com EhCache
 * Nuvem do Heroku
 * Integração contínua com TravisCI
 * Project Lombok

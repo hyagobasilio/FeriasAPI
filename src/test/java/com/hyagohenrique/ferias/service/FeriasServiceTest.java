@@ -6,9 +6,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Optional;
 
 import com.hyagohenrique.ferias.exception.FeriasNaoDisponivelException;
 import com.hyagohenrique.ferias.irepository.IFeriasRepository;
+import com.hyagohenrique.ferias.irepository.IFuncionarioRepository;
 import com.hyagohenrique.ferias.iservice.IFeriasService;
 import com.hyagohenrique.ferias.model.Endereco;
 import com.hyagohenrique.ferias.model.Equipe;
@@ -36,6 +38,9 @@ public class FeriasServiceTest {
     @MockBean
     private IFeriasRepository feriasRepository;
 
+    @MockBean
+    private IFuncionarioRepository funcionarioRepository;
+
     @Autowired
     private IFeriasService feriasService;
 
@@ -48,13 +53,15 @@ public class FeriasServiceTest {
     @Test
     public void testSalvarFerias() throws ParseException {
 
-        BDDMockito.given(this.feriasRepository.save(Mockito.any(Ferias.class))).willReturn(getMockFerias());
+        Optional<Funcionario> funcionarioMock = Optional.of(getMockFuncionario());
+
+        BDDMockito.given(this.funcionarioRepository.findById(Mockito.anyLong()))
+            .willReturn(funcionarioMock);
+        BDDMockito.given(this.feriasRepository.save(Mockito.any(Ferias.class)))
+            .willReturn(getMockFerias());
         
-        Funcionario f = getMockFuncionario();
-        f.setDataContratacao(DateUtils.convertLocalDateToDate(LocalDate.now().minusYears(1)));
 
         Ferias ferias = getMockFerias();
-        ferias.setFuncionario(f);
         
         Ferias fe = this.feriasService.salvar(ferias);
 
@@ -65,12 +72,16 @@ public class FeriasServiceTest {
 
     @Test
     public void testCadastrarFeriasParaFuncionarioComMenosDeDoisAnosDeContratado() throws ParseException {
-
-        BDDMockito.given(this.feriasRepository.save(Mockito.any(Ferias.class))).willReturn(getMockFerias());
-        
         Funcionario f = getMockFuncionario();
+        // seta a data de hoje para ser a data de contratacao do funcionario
         f.setDataContratacao(new Date(System.currentTimeMillis()));
 
+        Optional<Funcionario> funcionarioMock = Optional.of(f);
+
+        BDDMockito.given(this.funcionarioRepository.findById(Mockito.anyLong()))
+            .willReturn(funcionarioMock);
+        BDDMockito.given(this.feriasRepository.save(Mockito.any(Ferias.class))).willReturn(getMockFerias());
+        
         Ferias ferias = getMockFerias();
         ferias.setFuncionario(f);
 
@@ -82,23 +93,33 @@ public class FeriasServiceTest {
     
 
     public Ferias getMockFerias() throws ParseException {
+        LocalDate inicio = LocalDate.now().minusMonths(1);
+        LocalDate fim = LocalDate.now();
+
         Ferias f = new Ferias();
         f.setId(ID);
         f.setFuncionario(getMockFuncionario());
-        f.setInicio(new SimpleDateFormat("dd-MM-yyyy").parse("01-05-2020"));
-        f.setFim(new SimpleDateFormat("dd-MM-yyyy").parse("01-06-2020"));
+        f.setInicio(DateUtils.convertLocalDateToDate(inicio));
+        f.setFim(DateUtils.convertLocalDateToDate(fim));
         return f;
     }
 
+    /**
+     * Funcionário com dois anos de contratado
+     * @return
+     * @throws ParseException
+     */
     private Funcionario getMockFuncionario() throws ParseException {
         Equipe equipe = new Equipe();
         equipe.setId(ID);
         equipe.setNome("Equipe 1");
+
+        LocalDate dataContratacaoComMaisDeUmAno = LocalDate.now().minusYears(2);
         Funcionario funcionario = new Funcionario();
         funcionario.setId(ID);
         funcionario.setNome("NOME");
         funcionario.setDataNascimento(new SimpleDateFormat("dd-MM-yyyy").parse("07-07-1992"));
-        funcionario.setDataContratacao(new SimpleDateFormat("dd-MM-yyyy").parse("07-07-2020"));
+        funcionario.setDataContratacao(DateUtils.convertLocalDateToDate(dataContratacaoComMaisDeUmAno));
         funcionario.setEndereco(new Endereco("Av Brasil"));
         funcionario.setEquipe(equipe);
         return funcionario;

@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.hyagohenrique.ferias.dto.UsuarioDTO;
 import com.hyagohenrique.ferias.enums.Role;
 
 import lombok.Getter;
@@ -37,4 +38,12 @@ public class Usuario implements Serializable {
     
     @Enumerated(EnumType.STRING)
     private Role role; 
+
+    public UsuarioDTO converterParaDTO() {
+        UsuarioDTO dto = new UsuarioDTO();
+        dto.setFirstname(nome);
+        dto.setLastname("Sobrenome");
+        dto.setUsername(email);
+        return dto;
+    }
 }

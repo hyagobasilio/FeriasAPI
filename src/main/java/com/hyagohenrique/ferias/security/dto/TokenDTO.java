@@ -7,7 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class TokenDTO {
 
-	private String token;
+	private String access_token;
+	private long expires_in;
 
 
 }

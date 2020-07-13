@@ -5,10 +5,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import lombok.Data;
-
 @SuppressWarnings("deprecation")
-@Data
 public class JwtAuthenticationDTO {
 	
 	@NotNull(message = "Informe um email")
@@ -17,5 +14,22 @@ public class JwtAuthenticationDTO {
 	@NotNull(message = "Informe uma senha")
 	@NotEmpty(message = "Informe uma senha")
 	private String password;
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 
 }
