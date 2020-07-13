@@ -2,7 +2,7 @@
 
 # Ferias API
 
-Projeto rodando no Heroku: https://evening-ocean-24079.herokuapp.com/ he
+Projeto rodando no Heroku: https://feriasapi.herokuapp.com/
 
 Projeto criado para servir de referência *API RESTfull com Spring Boot utilizando TDD, CI e CD*, a principal funcionalidade dessa API é permitir o cadastro funcionários e ferias e indicar os que precisam tirar ferias.
 
@@ -20,7 +20,7 @@ Projeto criado para servir de referência *API RESTfull com Spring Boot utilizan
 * Segurança da API com autenticação via tokens JWT 
 
 ## Como executar a aplicação
-Certifique-se de ter o Maven instalado e adicionado ao PATH de seu sistema operacional, assim como o Git, crie um banco de dados no postgres e altere o arquivo application.properties informando as credenciais para a aplicação acessar a base de dados, não se preocupe com a criação das tabelas, o flyway se encarregará dessa função.
+Certifique-se de ter o Maven instalado e adicionado ao PATH de seu sistema operacional, assim como o Git, crie um banco de dados no mysql e altere o arquivo application.properties informando as credenciais para a aplicação acessar a base de dados, não se preocupe com a criação das tabelas, o flyway se encarregará dessa função.
 ```
 git clone https://github.com/hyagobasilio/feriasApi
 cd feriasApi
@@ -47,8 +47,8 @@ Agora você pode autenticar na API e obter um token de acesso através do endpoi
 
 ```
 {
-	"email": "user@heroku.com",
-	"password":"123456"
+	"email": "administrador.ferias@castgroup.com.br",
+	"password":"123a"
 }
 ```
 
@@ -63,3 +63,4 @@ mvn test
 Utilize a interface do Swagger para ter acesso a documentação dos endpoints, ela está disponível na url http://localhost:8080/swagger-ui.html
 ### Heroku
 A aplicação está disponível no heroku através da url 
+https://feriasapi.herokuapp.com/
