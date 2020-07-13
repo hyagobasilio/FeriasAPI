@@ -38,7 +38,7 @@ public class FuncionarioService implements IFuncionarioService {
     @Autowired
     private S3Service s3Service;
 
-    @Autowired private JavaMailSender mailSender;
+    //@Autowired private JavaMailSender mailSender;
 
     @Override
     public Funcionario salvar(Funcionario funcionario, MultipartFile file) {
@@ -62,7 +62,7 @@ public class FuncionarioService implements IFuncionarioService {
     
     private void enviarEmailComQrCode(Funcionario funcionario) {
 
-        String qrCodeBase64 = QRCodeUtils.gerarQRCodeAPartirDeFuncionarioDTO(funcionario.converteParaDTO(), 300, 150);
+        /* String qrCodeBase64 = QRCodeUtils.gerarQRCodeAPartirDeFuncionarioDTO(funcionario.converteParaDTO(), 300, 150);
         try {
             MimeMessage mail = mailSender.createMimeMessage();
             
@@ -74,7 +74,7 @@ public class FuncionarioService implements IFuncionarioService {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        } */
     }
 
     @Override
